@@ -1,0 +1,593 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Challenge CH 8 by Ghani esa setya mahdavikia",
+    "description": "Dokumentasi mengenai Challenge CH 8 Binar Academy",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "players",
+      "description": "Semua tentang Players"
+    }
+  ],
+  "paths": {
+    "/players": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Membuat player baru",
+        "description": "Membuat player baru",
+        "requestBody": {
+          "description": "Membuat player baru",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Player"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Berhasil membuat player baru",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerRes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal membuat player baru",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "username or email or password field cannot be empty."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Gagal membuat player baru",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Some error occurred while creating the Player."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Memuat semua data player",
+        "description": "Memuat semua data player",
+        "responses": {
+          "200": {
+            "description": "Berhasil memuat semua data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllPlayers"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Berhasil memuat semua data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Some error occurred while retrieving players."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Memuat data Player berdasarkan Id",
+        "description": "Memuat data Player berdasarkan Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID player yang ingin di muat",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil memuat data player berdasarkan Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerById"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Gagal memuat data player berdasarkan Id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Some error occurred while retrieving players."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Mengedit data player berdasarkan Id",
+        "description": "Mengedit data player berdasarkan Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID player yang ingin di edit",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Membuat player baru",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Player"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Berhasil mengedit data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "SUCCESS"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Player was updated successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal mengedit data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cannot update Player with id={id}. Maybe Player was not found or req.body is empty!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Gagal mengedit data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Error updating Player with id={id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Menghapus data Player berdasarkan Id",
+        "description": "Menghapus data Player berdasarkan Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID player yang ingin di hapus",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil menghapus data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "SUCCESS"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Player was deleted successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal menghapus data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cannot delete Player with id={id}. Maybe Player was not found!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Gagal menghapus data player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Could not delete Player with id={id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/exp/{id}": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Memuat data Exp Player berdasarkan Id",
+        "description": "Memuat data Exp Player berdasarkan Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID player yang ingin di muat",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Memuat data Exp Player berdasarkan Id",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "experience": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Berhasil memuat experience Player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "SUCCESS"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Player with id={id} has more experience."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Gagal memuat experience Player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Cannot update Player with id={id}!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Gagal memuat experience Player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string",
+                      "example": "FAILED"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Error updating Player with id={id}"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Player": {
+        "required": [
+          "username",
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "test"
+          },
+          "email": {
+            "type": "string",
+            "example": "test@test.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "passwordmu"
+          },
+          "experience": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "PlayerRes": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "example": "SUCCESS"
+          },
+          "message": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "test"
+              },
+              "email": {
+                "type": "string",
+                "example": "test@test.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "passwordmu"
+              },
+              "experience": {
+                "type": "integer",
+                "example": 1
+              },
+              "level": {
+                "type": "integer",
+                "example": 25
+              }
+            }
+          }
+        }
+      },
+      "AllPlayers": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "example": "SUCCESS"
+          },
+          "message": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@test.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "passwordmu"
+                },
+                "experience": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "level": {
+                  "type": "integer",
+                  "example": 25
+                }
+              }
+            }
+          }
+        }
+      },
+      "PlayerById": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "example": "SUCCESS"
+          },
+          "message": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "test"
+              },
+              "email": {
+                "type": "string",
+                "example": "test@test.com"
+              },
+              "password": {
+                "type": "string",
+                "example": "passwordmu"
+              },
+              "experience": {
+                "type": "integer",
+                "example": 1
+              },
+              "level": {
+                "type": "integer",
+                "example": 25
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "name": "auth",
+        "type": "apiKey",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "in": "header"
+      }
+    }
+  }
+}
